@@ -1,0 +1,211 @@
+@keyframes arrowFlow {
+  0%, 80%, 100% {
+    opacity: 0.2;
+    transform: translateX(0);
+    text-shadow: none;
+  }
+  40% {
+    opacity: 1;
+    transform: translateX(4px);
+    text-shadow: 0 0 8px rgba(34,211,238,0.8);
+  }
+}
+
+.app-root {
+  position: relative;
+}
+
+.scene-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.scene-layer.is-loading {
+  z-index: 2;
+}
+
+.scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.scene-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 4, 8, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.scene-loader-card {
+  width: min(360px, 75vw);
+  padding: 20px 24px;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(6, 12, 20, 0.72);
+  text-align: center;
+  font-family: var(--font-code);
+  color: #d7f9ff;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.scene-loader-title {
+  margin: 0 0 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.scene-loader-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.scene-loader-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0.2),
+    rgba(34, 211, 238, 0.95)
+  );
+  transition: width 180ms ease;
+}
+
+.scene-loader-percent {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: rgba(159, 217, 229, 0.9);
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+}
+
+.screen-stack {
+  position: relative;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.screen-panel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  filter: blur(2px);
+  transition:
+    opacity 420ms ease,
+    transform 520ms ease,
+    filter 520ms ease;
+  pointer-events: none;
+  will-change: opacity, transform, filter;
+}
+
+.panel-hero {
+  transform: translateX(-28px) scale(0.98);
+}
+
+.panel-planets {
+  transform: translateX(28px) scale(0.98);
+}
+
+.panel-end {
+  transform: translateY(28px) scale(0.98);
+}
+
+.screen-panel.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+@keyframes planetCardInNext {
+  0% {
+    opacity: 0;
+    transform: translateX(32px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes planetCardInPrev {
+  0% {
+    opacity: 0;
+    transform: translateX(-32px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.planet-card-motion {
+  animation: planetCardInNext 520ms ease both;
+  will-change: opacity, transform;
+}
+
+.planet-card-motion.planet-card-prev {
+  animation-name: planetCardInPrev;
+}
+
+.planet-card-surface {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(6, 12, 20, 0.35);
+  --spot-x: 50%;
+  --spot-y: 50%;
+  --spot-opacity: 0;
+}
+
+.planet-card-surface::before,
+.planet-card-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='28'%20viewBox='0%200%2028%2028'%3E%3Cpath%20d='M14%208v12M8%2014h12'%20stroke='rgb(255,255,255)'%20stroke-width='1'%20stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 28px 28px;
+  background-position: 0 0;
+  pointer-events: none;
+}
+
+.planet-card-surface::before {
+  opacity: 0.14;
+}
+
+.planet-card-surface::after {
+  opacity: calc(0.6 * var(--spot-opacity));
+  transition: opacity 180ms ease;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--spot-x) var(--spot-y),
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.3) 18%,
+    rgba(0, 0, 0, 0.12) 32%,
+    rgba(0, 0, 0, 0) 45%
+  );
+  mask-image: radial-gradient(
+    circle at var(--spot-x) var(--spot-y),
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.3) 18%,
+    rgba(0, 0, 0, 0.12) 32%,
+    rgba(0, 0, 0, 0) 45%
+  );
+}
+
+.planet-card-surface > * {
+  position: relative;
+  z-index: 1;
+}
