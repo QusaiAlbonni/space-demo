@@ -6,7 +6,7 @@ import { type Coordinates } from "./types/coordinates";
 import { planets } from "./data/planet";
 import PlanetView from "./components/PlanetView";
 import EndScreen from "./components/EndScreen";
-import SceneCanvas from "./components/SceneCanvas";
+import SceneCanvas from "./components/SceneCanvas.tsx";
 
 export default function App() {
   const target = useRef<Coordinates>({ x: 0, y: 0 });
@@ -70,7 +70,7 @@ export default function App() {
 
   return (
     <div className="app-root min-h-screen bg-black text-white overflow-hidden">
-      <SceneCanvas />
+      <SceneCanvas screen={screen} planetIndex={index} />
       <div className="app-content">
         <Header />
         <div className="min-h-screen text-white overflow-hidden screen-stack">

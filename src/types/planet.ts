@@ -9,6 +9,8 @@ export type Planet = {
     y: number;
     z: number;
   };
+  distanceFromSurfaceFactor: number;
+  lateralFactor: number,
   scale?: number;
   travelTime: string;
   dayLength: string;
