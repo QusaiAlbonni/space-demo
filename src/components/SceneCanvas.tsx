@@ -112,7 +112,7 @@ export default function SceneCanvas({
 
     const hdrloader = new HDRLoader(manager);
 
-    hdrloader.load("/hdr/hazy_nebulae_1.hdr", (texture) => {
+    hdrloader.load(`${import.meta.env.BASE_URL}hdr/hazy_nebulae_1.hdr`, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.background = texture;
       scene.environment = texture;
@@ -226,7 +226,7 @@ export default function SceneCanvas({
 
     const loadBody = (body: SceneBody) => {
       loader.load(
-        body.modelPath,
+        `${import.meta.env.BASE_URL}${body.modelPath}`,
         (gltf) => {
           const pivot = new THREE.Group();
           pivot.name = body.id;
